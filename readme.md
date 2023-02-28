@@ -193,6 +193,7 @@ Aşağıda istenilen sonuçlara ulaşabilmek için gerekli SQL sorgularını yaz
 		select * from islem;
 		select * from islem where vtarih not like "%-05-%";
 		select * from kitap where kitapno in (select kitapno from islem where vtarih not like "%-05-%");
+		select * from kitap where kitapno in (select kitapno from islem where vtarih not like "____-05-%" and atarih not like "____-05-%");
 
 
 # Görevler
