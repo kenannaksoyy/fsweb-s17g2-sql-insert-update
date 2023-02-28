@@ -154,6 +154,7 @@ Aşağıda istenilen sonuçlara ulaşabilmek için gerekli SQL sorgularını yaz
 	20) Öğrenci adı ve soyadını "Ad Soyad" olarak birleştirip, ad soyada göre kolayca arama yapmayı sağlayan bir prosedür yazın.
 
 		create procedure adsoyadbirlesiklistele as select concat(ograd, ogrsoyad) as adsoyad from ogrenci;
+		 /*select adsoyad from (select concat(ograd, ogrsoyad) as adsoyad from ogrenci) as birogrenci where adsoyad="Hülya Yiğit"*/
 
 		exec adsoyadbirlesiklistele
 	
@@ -164,18 +165,34 @@ Aşağıda istenilen sonuçlara ulaşabilmek için gerekli SQL sorgularını yaz
 	
 	#Esnek görevler (Esnek görevlerin hepsini Select in Select ile gerçekleştirmeniz beklenmektedir.)
 	22) Select in select yöntemiyle dram türündeki kitapları listeleyiniz.
-	
+		
+		select * from tur;
+		select * from kitap;
+		select * from kitap where turno=(select turno from tur where turadi="Dram");
+		//Dram sorgusu tekilde gelemedi sqllitestudioda test engineerde geldi
 	
 	23) Adı e harfi ile başlayan yazarların kitaplarını listeleyin.
-	
+
+		select yazarno from yazar where yazarad like "E%")
+		select * from kitap where yazarno in (select yazarno from yazar where yazarad like "E%");
+
 	
 	24) Kitap okumayan öğrencileri listeleyiniz.
-	
-	
+		 
+		 select * from ogrenci where ogrno not in (select ogrno from islem);
+
 	25) Okunmayan kitapları listeleyiniz
+
+		select * from kitap where kitapno not in (select kitapno from islem);
+		//başarı kitapı tek geldi son eklenen
 
 	
 	26) Mayıs ayında okunmayan kitapları listeleyiniz.
+
+		select * from kitap;
+		select * from islem;
+		select * from islem where vtarih not like "%-05-%";
+		select * from kitap where kitapno in (select kitapno from islem where vtarih not like "%-05-%");
 
 
 # Görevler
